@@ -38,7 +38,12 @@ for k in range(A.shape[0]):
 
 for i in range(A.shape[0]):
     for j in range(i + 1, A.shape[0]):
-        key = ('x' + str(i), 'x' + str(j))
-        bqm.quadratic[key] = A[i,j]
+        if not A[i,j] == 0:
+            bqm.set_quadratic('x' + str(i), 'x' + str(j), A[i,j]) 
 
+     
+sampler = EmbeddingComposite(DWaveSampler())
+sampleset = sampler.sample(bqm)
+#, num_reads=5000, label='Protac Regression Test 1'
+print(sampleset)
 
