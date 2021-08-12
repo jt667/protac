@@ -43,7 +43,7 @@ def accuracy(labels, predictions):
     return loss
 
 
-df = pd.read_csv("protac cleaned.csv")
+df = pd.read_csv("protacCleaned.csv")
 
 
 df= df.drop(["Smiles", 'Dmax (%)',
