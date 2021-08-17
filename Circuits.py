@@ -1,15 +1,22 @@
 import pennylane as qml
 
-def circuit1(params,n):
+
+def circuit1(params,x):
+    n = x.size
 # Requires 2n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
+    
     for i in range(n):
         qml.RX(params[2*i],wires=i)
         qml.RZ(params[2*i + 1],wires=i)
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit2(params,n):
+
+def circuit2(params,x):
+    n = x.size
 # Requires 2n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     for i in range(n):
         qml.RX(params[2*i],wires=i)
         qml.RZ(params[2*i + 1],wires=i)
@@ -17,8 +24,10 @@ def circuit2(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit3(params,n):
+def circuit3(params,x):
+    n = x.size
 # Requires 3n-1 parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     for i in range(n):
         qml.RX(params[2*i],wires=i)
         qml.RZ(params[2*i + 1],wires=i)
@@ -27,8 +36,10 @@ def circuit3(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit4(params,n):
+def circuit4(params,x):
+    n = x.size
 # Requires 3n-1 parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     for i in range(n):
         qml.RX(params[2*i],wires=i)
         qml.RZ(params[2*i + 1],wires=i)
@@ -37,8 +48,10 @@ def circuit4(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit5(params,n):
+def circuit5(params,x):
+    n = x.size
 # Requires n**2 + 3n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     for i in range(n):
         qml.RX(params[2*i],wires=i)
         qml.RZ(params[2*i + 1],wires=i)
@@ -54,8 +67,10 @@ def circuit5(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
             
-def circuit6(params,n):
+def circuit6(params,x):
+    n = x.size
 # Requires n**2 + 3n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     for i in range(n):
         qml.RX(params[2*i],wires=i)
         qml.RZ(params[2*i + 1],wires=i)
@@ -71,8 +86,10 @@ def circuit6(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit7(params,n):
+def circuit7(params,x):
+    n = x.size
 # Requires 9/8 n**2 + n/4 parameters, n even
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
     for i in range(int(n/2)):
 # RX, RZ blocks
@@ -89,8 +106,11 @@ def circuit7(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit8(params,n):
+
+def circuit8(params,x):
+    n = x.size
 # Requires 9/8 n**2 + n/4 parameters, n even
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
     for i in range(int(n/2)):
 # RX, RZ blocks
@@ -107,13 +127,15 @@ def circuit8(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit9(params,n):
+def circuit9(params,x):
+    n = x.size
 # Requires n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
 # H block  
-    qml.broadcast(qml.H,[i for i in range(n)] ,"single")
+    qml.broadcast(qml.Hadamard,[i for i in range(n)] ,"single")
 # CZ chain
     for i in range(n-1):
-        qml.CZ([n-1-i,n-2-i])
+        qml.CZ(wires=[n-1-i,n-2-i])
 # RX block
     for i in range(n):
         qml.RX(params[i],wires=[i])
@@ -121,8 +143,10 @@ def circuit9(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit10(params,n):
+def circuit10(params,x):
+    n = x.size
 # Requires 2n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
 # RY block
     for i in range(n):
         qml.RY(params[i],wires=i)
@@ -138,9 +162,10 @@ def circuit10(params,n):
     return measurements
 
 
-def circuit11(params,n):
-# Requires 1/2 n**2 + n, n evenz
-    
+def circuit11(params,x):
+    n = x.size
+# Requires 1/2 n**2 + n, n even
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
     for i in range(int(n/2)):
         for j in range(n-2*i):
@@ -156,9 +181,10 @@ def circuit11(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit12(params,n):
-# Requires 1/2 n**2 + n, n evenz
-    
+def circuit12(params,x):
+    n = x.size
+# Requires 1/2 n**2 + n, n even
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
     for i in range(int(n/2)):
         for j in range(n-2*i):
@@ -174,8 +200,10 @@ def circuit12(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit13(params,n):
+def circuit13(params,x):
+    n = x.size
 # Requires 4n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
     for i in range(n):
 # RY block
@@ -209,8 +237,10 @@ def circuit13(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit14(params,n):
+def circuit14(params,x):
+    n = x.size
 # Requires 4n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
     for i in range(n):
 # RY block
@@ -244,8 +274,10 @@ def circuit14(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
     
-def circuit15(params,n):
+def circuit15(params,x):
+    n = x.size
 # Requires 2n parameters 
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
     for i in range(n):
 # RY block
@@ -279,8 +311,10 @@ def circuit15(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit16(params,n):
+def circuit16(params,x):
+    n = x.size
 # Requires 1/8 n**2 + 9n/4 parameters, n even
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
 # RX, RZ block    
     for j in range(n):
@@ -299,8 +333,10 @@ def circuit16(params,n):
     return measurements
 
 
-def circuit17(params,n):
+def circuit17(params,x):
+    n = x.size
 # Requires 1/8 n**2 + 9n/4 parameters, n even
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
 # RX, RZ block    
     for j in range(n):
@@ -318,8 +354,10 @@ def circuit17(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit18(params,n):
+def circuit18(params,x):
+    n = x.size
 # Requires 3n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
 # RX, RZ block
     for i in range(n):
@@ -339,9 +377,12 @@ def circuit18(params,n):
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
 
-def circuit19(params,n):
+def circuit19(params,x):
+    n = x.size
 # Requires 3n parameters
+    qml.templates.AngleEmbedding(x,wires=[i for i in range(n)])
     index = 0
+    
 # RX, RZ block
     for i in range(n):
         qml.RX(params[index],wires=i)
@@ -357,7 +398,6 @@ def circuit19(params,n):
         qml.CRX(params[index],wires=[n-2-i,n-1-i])
         index +=1 
     
-    measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
-    return measurements
+    return [qml.expval(qml.PauliZ(i)) for i in range(n)]
             
 
