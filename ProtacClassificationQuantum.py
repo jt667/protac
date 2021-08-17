@@ -60,18 +60,10 @@ def scale(data):
     return data
         
 
-df = pd.read_csv("protac cleaned.csv")
-
-
-df= df.drop(["Smiles", 'Dmax (%)',
- 'IC50 (nM, Protac to Target)',
- 'IC50 (nM, Cellular activities)'], axis=1)
-df=df.dropna(subset=["DC50 (nM)"])
-df = df.drop(df[ df["Sensor"] != 0].index).drop(["Sensor"],axis=1)
+df = pd.read_csv("protacCleaned.csv")
 df = df.drop(df[ df["DC50 (nM)"] > 30000].index)
 df["DC50 (nM)"] = np.log2(df["DC50 (nM)"])
-df["HighLow"] = df["DC50 (nM)"].ge(10.1).astype(int)
-#df = df.drop("Molecular Weight",axis=1)
+df["HighLow"] = df["DC50 (nM)"].ge(8.23).astype(int)
 
 
 
