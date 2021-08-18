@@ -6,27 +6,26 @@ import dimod
 
 
 
-df = pd.read_csv("protac cleaned.csv")
+df = pd.read_csv("protacCleaned.csv")
+df = df.drop(df[ df["DC50 (nM)"] > 30000].index)
+y = np.log2(df["DC50 (nM)"])
+df = df.drop(["DC50 (nM)"],axis=1)
 
-
-df= df.drop(["Smiles", 'Dmax (%)',
- 'IC50 (nM, Protac to Target)',
- 'IC50 (nM, Cellular activities)'], axis=1)
-df=df.dropna(subset=["DC50 (nM)"])
-df["ones"] = df.shape[0]*[1]
 
 scaler = StandardScaler()
-df_transformed = scaler.fit_transform(df)
-X = np.delete(df_transformed,0,1)
+X = scaler.fit_transform(df)
+X = np.hstack((X,np.ones([X.shape[0],1])))
+
+
 
 P = np.array([-1, -0.5, 0.5, 1, 2, 4])
-curlyP = np.kron(np.eye(12),P)
+curlyP = np.kron(np.eye(X.shape[1]),P)
 XP = np.matmul(X,curlyP)
 
 
 
 A = np.matmul(XP.transpose(),XP)
-b = -2*np.matmul(XP.transpose(), df_transformed[:,0])
+b = -2*np.matmul(XP.transpose(), y)
 
 
 bqm = dimod.AdjVectorBQM(dimod.Vartype.BINARY)
