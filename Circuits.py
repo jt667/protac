@@ -167,7 +167,7 @@ def circuit10(params,x):
 # CZ ring
     for i in range(n-1):
         qml.CZ(wires=[n-1-i,n-2-i])
-    qml.CZ([0,n-1])
+    qml.CZ(wires=[0,n-1])
 # RY block
     for i in range(n):
         qml.RY(params[n+i],wires=i)
