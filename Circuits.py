@@ -1,5 +1,19 @@
 import pennylane as qml
+from numpy.polynomial import polynomial
 
+def parameter_count(circuitNum,numWires):
+# Read polynomial coefficient data
+    with open("parameterPolynomials.txt") as f:
+        content = f.readlines()
+# Convert strings to lists of coefficients [a0, a1, a2, ...]
+    paramPolynomials = []
+    for line in content:
+        coefStr = line.rstrip().split(",")
+        coefFlt = [float(x) for x in coefStr]
+        paramPolynomials.append(coefFlt)
+
+# Return the evaluated polynomial p(numWires) as no. params needed
+    return int(polynomial.polyval(numWires,paramPolynomials[circuitNum-1]))
 
 def circuit1(params,x):
     n = x.size
