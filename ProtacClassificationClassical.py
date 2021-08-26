@@ -14,7 +14,7 @@ scaler = StandardScaler()
 dfTransformed = scaler.fit_transform(df.drop(["DC50 (nM)","HighLow"],axis=1))
 
 X_train, X_test, y_train, y_test = train_test_split( 
-    df_transformed, df["HighLow"],test_size=0.2, random_state=42)
+    dfTransformed, df["HighLow"],test_size=0.2, random_state=42)
 
 
 clf = RandomForestClassifier()
