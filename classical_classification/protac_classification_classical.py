@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import mean_squared_error, accuracy_score, f1_score
 
-
+##
 ## Preparation
 ##
 
@@ -28,7 +28,7 @@ dfTransformed = scaler.fit_transform(df.drop(["DC50 (nM)","HighLow"],axis=1))
 X_train, X_test, y_train, y_test = train_test_split( 
     dfTransformed, df["HighLow"],test_size=0.2, random_state=42)
 
-
+##
 ## Model Training
 ##
 
@@ -37,8 +37,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 clf = RandomForestClassifier()
 clf.fit(X_train, y_train)
 
-
+##
 ## Final Predictions
+##
 
 # Compute predictions on test set, accuracy and f1 score
 predictions = clf.predict(X_test)
