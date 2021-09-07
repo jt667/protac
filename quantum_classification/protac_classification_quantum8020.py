@@ -160,7 +160,7 @@ hyperparams = circuit_scores[param_index][1]
 
 # Save the hyper parameters
 hyperparams.save_params(
-    "hyperparameters//8020bestParams" + str(hyperparam_num) + "trials.txt"
+    "hyperparameters//8020best_params" + str(hyperparam_num) + "_trials.txt"
 )
 
 var = hyperparams.starting_var
