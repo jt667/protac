@@ -40,12 +40,12 @@ circuit_nums = [1, 2, 5, 10, 12, 13, 16, 18]
 circuit_scores = []
 np.random.seed(15)
 
-for circuit_num in circuit_nums:
+for circ_num in circuit_nums:
     # Reset best f1 score tracker
     best_score = 0
 
     # Number of training parameters for circuit + linear model
-    parameter_num = circuits.parameter_count(circuit_num, x.shape[1]) + x.shape[1] + 1
+    parameter_num = circuits.parameter_count(circ_num, x.shape[1]) + x.shape[1] + 1
 
     # Generate random values for training parameters and
     # stepsize, beta1, beta2 values of an Adam Optimiser
@@ -84,29 +84,43 @@ for circuit_num in circuit_nums:
                 y_train_batch = y_fold[it * batch_size : (it + 1) * batch_size]
                 var = opt.step(
                     lambda v: optimisation_functions.cost(
-                        v, x_train_batch, y_train_batch, circuit_num
+                        v, x_train_batch, y_train_batch, circ_num
                     ),
                     var,
                 )
             # Calculate f1 and accuracy scores
             pred_vals = [
-                round(optimisation_functions.classifier(var, f, circuit_num))
+                round(optimisation_functions.classifier(var, f, circ_num))
                 for f in x_train[test_index]
             ]
             f1_scores.append(f1_score(y_train[test_index], pred_vals))
             acc_scores.append(accuracy_score(y_train[test_index], pred_vals))
-        # Check if current f1score is highest and model meets the accuracy threshold.
-        # Store it if so.
-        if np.mean(f1_scores) > best_score and np.mean(acc_scores) > threshold_acc:
+        # Save the first set of parameters
+        if s == steps[0]:
             best_score = np.mean(f1_scores)
             hyperparams = optimisation_functions.hyperparameters(
-                circuit_num, starting_var=var_init, step_size=s, beta1=b1, beta2=b2
+                starting_var=var_init,
+                circuit_num=circ_num,
+                step_size=s,
+                beta1=b1,
+                beta2=b2,
+            )
+        # Check if current f1score is highest and model meets the accuracy threshold.
+        # Store it if so.
+        elif np.mean(f1_scores) > best_score and np.mean(acc_scores) > threshold_acc:
+            best_score = np.mean(f1_scores)
+            hyperparams = optimisation_functions.hyperparameters(
+                starting_var=var_init,
+                circuit_num=circ_num,
+                step_size=s,
+                beta1=b1,
+                beta2=b2,
             )
     # Save the best hyperparameters locally and in a .txt file
     circuit_scores.append([best_score, hyperparams])
     hyperparams.save_params()
 
-    print("Completed Circuit " + str(circuit_num))
+    print("Completed Circuit " + str(circ_num))
 ##
 ## Select best circuit model
 ##
@@ -160,7 +174,7 @@ hyperparams = circuit_scores[param_index][1]
 
 # Save the hyper parameters
 hyperparams.save_params(
-    "hyperparameters//8020best_params" + str(hyperparam_num) + "_trials.txt"
+    "hyperparameters//8020bestParams" + str(hyperparam_num) + "trials.txt"
 )
 
 var = hyperparams.starting_var
