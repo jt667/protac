@@ -72,7 +72,7 @@ def log_loss(labels, predictions):
 
 class hyperparameters:
     def __init__(
-        self, circuit_num, starting_var, step_size=0.01, beta1=0.9, beta2=0.99
+        self, circuit_num=1, starting_var=[], step_size=0.01, beta1=0.9, beta2=0.99
     ):
         self.circuit_num = circuit_num
         self.starting_var = starting_var
