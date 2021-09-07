@@ -94,6 +94,10 @@ class hyperparameters:
         f.write("Starting Variables: \n")
         for i in self.starting_var:
             f.write(str(i) + "\n")
+        if hasattr(self, "final_vars"):
+            f.write("Final Variables: \n")
+            for i in self.final_vars:
+                f.write(str(i) + "\n")
         f.write("Stepsize: " + str(self.step_size) + "\n")
         f.write("Beta1: " + str(self.beta1) + "\n")
         f.write("Beta2: " + str(self.beta2))
@@ -106,7 +110,18 @@ class hyperparameters:
         params = [line.strip() for line in f.readlines()]
         f.close()
         self.circuit_num = int(params[0].split()[1])
-        self.starting_var = np.array([float(x) for x in params[2:-3]])
+        param_vars = params[2:-3]
+        if "Final" in param_vars[int(0.5 * (len(param_vars) - 1))]:
+            param_vars.remove("Final Variables:")
+            param_vars = [float(x) for x in param_vars]
+            n = int(0.5 * len(param_vars))
+            self.starting_var = np.array(param_vars[:n])
+            self.final_vars = np.array(param_vars[n:])
+        else:
+            self.starting_var = np.array([float(x) for x in param_vars])
         self.step_size = float(params[-3].split()[1])
         self.beta1 = float(params[-2].split()[1])
         self.beta2 = float(params[-1].split()[1])
+
+    def save_final_vars(self, var):
+        self.final_vars = var
