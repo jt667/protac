@@ -6,7 +6,7 @@ import dimod
 
 
 
-df = pd.read_csv("protacCleaned.csv")
+df = pd.read_csv("protac_cleaned.csv")
 df = df.drop(df[ df["DC50 (nM)"] > 30000].index)
 y = np.log2(df["DC50 (nM)"])
 df = df.drop(["DC50 (nM)"],axis=1)
