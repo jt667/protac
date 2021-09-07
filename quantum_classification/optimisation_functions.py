@@ -17,7 +17,7 @@ def scale(data):
 
 def dataPrep(upperBound=301):
     # Prepares the data for classification
-    df = pd.read_csv("protacCleaned.csv")
+    df = pd.read_csv("protac_cleaned.csv")
     # Drop the outlier
     df = df.drop(df[df["DC50 (nM)"] > 30000].index)
     # Create classes for high and low concentations of DC50
