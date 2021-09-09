@@ -60,5 +60,5 @@ pred_vals = [
 ]
 final_score = f1_score(y_test_final, pred_vals)
 final_acc = accuracy_score(y_test_final, pred_vals)
-print(final_score)
-print(final_acc)
+print("f1 Score: " + str(final_score))
+print("Accuracy: " + str(final_acc))
