@@ -25,9 +25,9 @@ def dataPrep(upperBound=301):
 
     # Rescale into [-pi,pi]
     scaler = StandardScaler()
-    dfTransformed = scaler.fit_transform(df.drop(["DC50 (nM)", "HighLow"], axis=1))
-    dfTransformed = scale(dfTransformed)
-    return dfTransformed, df["HighLow"]
+    df_transformed = scaler.fit_transform(df.drop(["DC50 (nM)", "HighLow"], axis=1))
+    df_transformed = scale(df_transformed)
+    return df_transformed, df["HighLow"]
 
 
 def cost(var, X, Y, circuit_num=5):
