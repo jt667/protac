@@ -1,3 +1,4 @@
+import sys
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import f1_score, accuracy_score
 import circuits
@@ -27,9 +28,21 @@ circuit_numbers = [1]
 data_splits = [0.9]
 
 
+# Which run should we perform?
+jobID = "interactive"
+run = 1
+if len(sys.argv) > 1:
+    try:
+        jobID = sys.argv[1]
+        run = int(sys.argv[2])
+    except ValueError:
+        print("Invalid run number!")
+        raise
+print("\nJob: {}, Run: {}\n".format(jobID, run))
+
 # Read customisable parameters from a file instead
 file_path = "run_parameters.json"
-run = 1
+
 
 if len(file_path) > 0:
     cp = optimisation_functions.customisable_parameters(file_path=file_path, run=run)
