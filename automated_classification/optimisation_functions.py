@@ -200,13 +200,11 @@ class customisable_parameters:
         threshold_acc=0.7,
         circuit_nums=[1, 2, 5, 10, 12, 13, 16, 18],
         data_splits = [0.6,0.2],
-        file_path="",
-        run=1        
+        file_path="",   
     ):
-        if isinstance(run,int):
-            run = str(run)
+        
         if len(file_path) > 0:
-            self.load_params_json(file_path, run)
+            self.load_params_json(file_path)
         else:
             self.hyperparam_num = hyperparam_num
             self.mini_batch_num = mini_batch_num
@@ -215,8 +213,8 @@ class customisable_parameters:
             self.circuit_nums = circuit_nums
             self.data_splits = data_splits
 
-    def load_params_json(self, file_path, run):
+    def load_params_json(self, file_path):
         with open(file_path, "r") as f:
             run_dict = json.load(f)
-        for key in run_dict[run]:
-            setattr(self, key, run_dict[run][key])
+        for key in run_dict:
+            setattr(self, key, run_dict[key])
