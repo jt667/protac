@@ -254,6 +254,6 @@ print(final_acc)
 
 # Save the hyper parameters
 hyperparams.save_final_vars(var)
-#hyperparams.save_params_json(
-#    "hyperparameters//602020best_params" + str(cp.hyperparam_num) + "_trials.json"
-#)
+hyperparams.save_params_json(
+    "hyperparameters//run" + str(run) + ".json"
+)
