@@ -41,7 +41,7 @@ if len(sys.argv) > 1:
 print("\nJob: {}, Run: {}\n".format(jobID, run))
 
 # Read customisable parameters from a file instead
-file_path = "run_parameters.json"
+file_path = "run_parameters//run" + str(run) +".json"
 
 
 if len(file_path) > 0:
