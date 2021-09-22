@@ -1,0 +1,1 @@
+{"hyperparam_num": 20, "mini_batch_num": 20, "epochs": 3, "threshold_acc": 0.7, "circuit_nums": [12, 13], "data_splits": [0.6, 0.2]}
