@@ -23,8 +23,8 @@ epochs = 1
 threshold_accuracy = 0.7
 # Circuit Models we're testing (takes lists of integers from 1 to 19)
 circuit_numbers = [1]
-# Split the data into a hyperparameter tuning / model selection / final model
-# or hypeparameter tuning + model selection / final model
+# Split the data into a hyperparameter tuning / model selection / final model [0.6,0.2]
+# or hypeparameter tuning + model selection / final model [0.8]
 data_splits = [0.9]
 
 
