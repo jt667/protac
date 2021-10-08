@@ -19,7 +19,7 @@ def classifier(var,x):
 ##
 
 # File containing hyperparameters
-param_path = "hyperparameters//8020best_params40_trials.json"
+param_path = "qsharp_test_circuit_15.json"
 verification_model = optimisation_functions.load_params_json(param_path)
 
 x,y = optimisation_functions.data_prep(splits=[0.6,0.2])
