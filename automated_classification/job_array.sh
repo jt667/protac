@@ -8,9 +8,7 @@
  
 
 #SBATCH --mail-type=ALL            # Mail events (NONE, BEGIN, END, FAIL, ALL)
-#SBATCH --mail-user=   # Where to send mail
 
- 
 
 #SBATCH --nodes=6                   # Use one node
 #SBATCH --ntasks=1                  # Run a single task
