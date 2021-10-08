@@ -31,7 +31,7 @@ y_train, y_test_select, y_test_final = y
 # Compute predictions and scores
 pred_vals = [
     round(
-        optimisation_functions.classifier(
+        classifier(
             verification_model.final_vars, f
             )
     )
