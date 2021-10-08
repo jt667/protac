@@ -1,5 +1,5 @@
 from sklearn.metrics import f1_score, accuracy_score
-import optimisation_functions
+import optimisation_functions_simplified as optimisation_functions
 import numpy as np
 
 
