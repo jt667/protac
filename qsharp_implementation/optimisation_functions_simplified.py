@@ -1,9 +1,7 @@
-import pennylane as qml
-from pennylane import numpy as np
+import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-import circuits
 import os
 import json
 
@@ -48,47 +46,6 @@ def data_prep(upperBound=301,splits=[0.6,0.2], random_state=15):
         
     
     return x,y
-
-
-def cost(var, X, Y, circuit_num=5):
-    # Compute class predictions
-    predictions = [classifier(var, x, circuit_num) for x in X]
-    # return square_loss(Y, predictions)
-    return log_loss(Y, predictions)
-
-
-def classifier(var, x, circuit_num=5):
-    # Pick device circuit is executed on
-    # dev = qml.device("qiskit.ibmq",wires=x.size, backend='ibmq_qasm_simulator', shots=100)
-    dev = qml.device("default.qubit", wires=x.size)
-    circuit = qml.QNode(getattr(circuits, "circuit" + str(circuit_num)), dev)
-
-    # Run the circuit
-    measurements = circuit(var, x)
-
-    # Put outputs into a linear model with sigmoid activation function
-    lin_model = np.inner(measurements, var[-11:-1]) + var[-1]
-    sig = 1 / (1 + np.exp((-1) * lin_model))
-
-    return sig
-
-
-def square_loss(labels, predictions):
-    # Compute the squared loss function
-    loss = 0
-    for l, p in zip(labels, predictions):
-        loss = loss + (l - p) ** 2
-    loss = loss / len(labels)
-    return loss
-
-
-def log_loss(labels, predictions):
-    # Compute the log loss function
-    loss = 0
-    for l, p in zip(labels, predictions):
-        loss += l * np.log(p) + (1 - l) * np.log(1 - p)
-    return (-1) * loss / len(labels)
-
 
 class hyperparameters:
     def __init__(
@@ -189,32 +146,3 @@ class hyperparameters:
         f.write("Beta1: " + str(self.beta1) + "\n")
         f.write("Beta2: " + str(self.beta2))
         f.close()
-
-
-class customisable_parameters:
-    def __init__(
-        self,
-        hyperparam_num=40,
-        mini_batch_num=20,
-        epochs=1,
-        threshold_acc=0.7,
-        circuit_nums=[1, 2, 5, 10, 12, 13, 16, 18],
-        data_splits = [0.6,0.2],
-        file_path="",   
-    ):
-        
-        if len(file_path) > 0:
-            self.load_params_json(file_path)
-        else:
-            self.hyperparam_num = hyperparam_num
-            self.mini_batch_num = mini_batch_num
-            self.epochs = epochs
-            self.threshold_acc = threshold_acc
-            self.circuit_nums = circuit_nums
-            self.data_splits = data_splits
-
-    def load_params_json(self, file_path):
-        with open(file_path, "r") as f:
-            run_dict = json.load(f)
-        for key in run_dict:
-            setattr(self, key, run_dict[key])
