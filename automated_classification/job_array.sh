@@ -8,7 +8,7 @@
  
 
 #SBATCH --mail-type=ALL            # Mail events (NONE, BEGIN, END, FAIL, ALL)
-#SBATCH --mail-user=domingo.salazar@astrazeneca.com   # Where to send mail
+#SBATCH --mail-user=   # Where to send mail
 
  
 
