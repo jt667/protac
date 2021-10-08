@@ -321,11 +321,9 @@ def circuit15(params, x):
 
     # CNOT ring
     qml.CNOT(wires=[n - 1, 0])
-    index += 1
 
     for i in range(n - 1):
         qml.CNOT(wires=[n - 2 - i, n - 1 - i])
-        index += 1
 
     for i in range(n):
         # RY block
@@ -334,13 +332,10 @@ def circuit15(params, x):
 
     # CNOT ring
     qml.CNOT(wires=[n - 1, n - 2])
-    index += 1
     qml.CNOT(wires=[0, n - 1])
-    index += 1
-
+    
     for i in range(n - 2):
         qml.CNOT(wires=[i + 1, i])
-        index += 1
 
     measurements = [qml.expval(qml.PauliZ(i)) for i in range(n)]
     return measurements
